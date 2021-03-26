@@ -1,4 +1,4 @@
-# Read daily prices from Ibovespa
+# Read daily data from Ibovespa
 
 dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D25032021.txt", 'r')
 dataStock = {}
