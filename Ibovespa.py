@@ -1,9 +1,10 @@
 # Read daily prices from Ibovespa
 
-dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D23032021.txt", 'r')
+dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D25032021.txt", 'r')
 dataStock = {}
+
 # Passing readline() 0
-line = dataDay.readline()
+# line = dataDay.readline()
 
 # Reading data
 
@@ -47,3 +48,9 @@ dataDay.close
 
 # Data refination
 
+for stock in dataStock:
+    dataStock[stock].update({"changeDay": dataStock[stock]["closePrice"] - dataStock[stock]["openPrice"]})
+    dataStock[stock].update({"changeDayPercent": dataStock[stock]["changeDay"] / dataStock[stock]["openPrice"]})
+
+
+print(dataStock["WEGE3"])
