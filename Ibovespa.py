@@ -1,12 +1,12 @@
 # Read daily data from Ibovespa
 
-dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D25032021.txt", 'r')
-dataStock = {}
+dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D26032021.txt", 'r')
 
 # Passing readline() 0
 # line = dataDay.readline()
 
-# Reading data
+# Reading stocks data
+dataStock = {}
 
 for line in dataDay:
     line = dataDay.readline()
@@ -24,9 +24,9 @@ for line in dataDay:
     else:
         dataStockTmp = {
             "tradingDate"   : line[2:10].strip(),
-            "BDICode"       : line[10:12].strip(),
+            "BDICode"       : int(line[10:12].strip()),
             "tradingCode"   : line[12:24].strip(),
-            "market"        : line[24:27].strip(),
+            "market"        : int(line[24:27].strip()),
             "name"          : line[27:39].strip(),
             "especification": line[39:49].strip(),
             "deadline"      : line[49:52].strip(),
@@ -47,10 +47,32 @@ for line in dataDay:
 dataDay.close
 
 # Data refination
-
 for stock in dataStock:
     dataStock[stock].update({"changeDay": dataStock[stock]["closePrice"] - dataStock[stock]["openPrice"]})
     dataStock[stock].update({"changeDayPercent": dataStock[stock]["changeDay"] / dataStock[stock]["openPrice"]})
 
+# Reading Ibovespa index
+dataIbov = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\IBOVDia_26-03-21.csv")
 
-print(dataStock["WEGE3"])
+ibovStock = []
+
+while True:
+    line = dataIbov.readline()
+
+    if not line:
+        break
+
+    ibovStockTmp = line[0:line.index(";")]    
+    ibovStock.append(ibovStockTmp)
+
+# Getting top stocks
+
+topValuationStock = []
+
+for stock in dataStock:
+    if dataStock[stock]["tradingCode"] in ibovStock:
+        topValuationStock.append(dataStock[stock])
+
+topValuationStock.sort(key= lambda i: i['changeDayPercent'], reverse=True)
+
+print(topValuationStock[0:4])
