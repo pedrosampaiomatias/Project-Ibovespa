@@ -46,11 +46,6 @@ for line in dataDay:
 # Close file after reading
 dataDay.close
 
-# Data refination
-for stock in dataStock:
-    dataStock[stock].update({"changeDay": dataStock[stock]["closePrice"] - dataStock[stock]["openPrice"]})
-    dataStock[stock].update({"changeDayPercent": dataStock[stock]["changeDay"] / dataStock[stock]["openPrice"]})
-
 # Reading Ibovespa index
 dataIbov = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\IBOVDia_26-03-21.csv")
 
