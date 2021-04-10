@@ -16,14 +16,14 @@ while True:
     ibovStockTmp = line[0:line.index(";")]    
     ibovStock.append(ibovStockTmp)
 
-# Getting top stocks
+# # Getting top stocks
 
-topValuationStock = []
+# topValuationStock = []
 
-for stock in dataStock:
-    if dataStock[stock]["tradingCode"] in ibovStock:
-        topValuationStock.append(dataStock[stock])
+# for stock in dataStock:
+#     if dataStock[stock]["tradingCode"] in ibovStock:
+#         topValuationStock.append(dataStock[stock])
 
-topValuationStock.sort(key= lambda i: i['changeDayPercent'], reverse=True)
+# topValuationStock.sort(key= lambda i: i['changeDayPercent'], reverse=True)
 
-print(topValuationStock[0:4])
+# print(topValuationStock[0:4])
