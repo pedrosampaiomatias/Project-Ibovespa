@@ -1,20 +1,25 @@
 # functions.py
-# Description: File with functions definitions data 23-30
+# Description: File with functions definitions
 
 import csv
 
 # Function: convertToCSV()
 # Description: Convert .txt file with daily stocks data to a .csv file
 
-def convertToCSV(dataDay):
+def convertToCSV(dataDay, dataPath):
 
     # Reading data from .txt
     
-    dataStock = {}
-    header = ' '
+    dataStock = []
+    header = ''
+    trailer = ''
 
     for line in dataDay:
         line = dataDay.readline()
+
+        if not line:
+            continue
+
         registerType = int(line[0:2])
 
         # Header
@@ -45,13 +50,15 @@ def convertToCSV(dataDay):
                 "bestSellPrice" : float(line[134:147].strip()) / 100
             }
 
-        dataStock.update({dataStockTmp["tradingCode"]:dataStockTmp})
+        dataStock.append(dataStockTmp)
 
     # Creating .csv file
 
-    fileName = header[23:30]
-    with open(fileName,'w') as newFile:
-        csv_writer = csv.writer(newFile, delimiter=',')
+    fileName = str(trailer[23:31].strip())
+    keys = dataStock[0].keys()
 
-        for line in dataStock:
-            csv_writer.writerow(line)
+    Path = dataPath[:-4] + fileName + ".txt"
+    
+    with open(Path,"w",newline='') as newFile:
+        csv_writer = csv.DictWriter(newFile, keys)
+        csv_writer.writerows(dataStock)
