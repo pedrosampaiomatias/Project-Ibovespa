@@ -1,29 +1,16 @@
-# Read daily data from Ibovespa
+# Ibovespa.py
+# Description: Main file for Ibovespa.py project
 
-dataDay = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\COTAHIST_D26032021.txt", 'r')
+import os
+import functions
 
-# Reading Ibovespa index
-dataIbov = open("D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data\\IBOVDia_26-03-21.csv")
+# Read daily data from Ibovespa and creat .csv files for pandas
 
-ibovStock = []
+# Data folder path
+dataPath = "D:\\Codes\\Python\\Projeto Ibovespa\\Project-Ibovespa\\Data"
 
-while True:
-    line = dataIbov.readline()
+os.chdir(dataPath)
 
-    if not line:
-        break
-
-    ibovStockTmp = line[0:line.index(";")]    
-    ibovStock.append(ibovStockTmp)
-
-# # Getting top stocks
-
-# topValuationStock = []
-
-# for stock in dataStock:
-#     if dataStock[stock]["tradingCode"] in ibovStock:
-#         topValuationStock.append(dataStock[stock])
-
-# topValuationStock.sort(key= lambda i: i['changeDayPercent'], reverse=True)
-
-# print(topValuationStock[0:4])
+for file in os.listdir():
+    file_path = f"{dataPath}\\{file}"
+    functions.convertToCSV(open(file_path), dataPath)
